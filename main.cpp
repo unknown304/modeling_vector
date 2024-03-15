@@ -381,6 +381,7 @@ void menu(vector<T> &vec){
     cout<<"X - sort members"<<endl;
     cout<<"R - Check how many times member appears"<<endl;
     cout<<"W - Write members to a file"<<endl;
+    cout<<"I - Write members from a file"<<endl;
     cout<<"C- clear screen"<<endl;
     cout <<"Q - quit:" << endl<<endl;
     cout<<"Enter your choice:";
