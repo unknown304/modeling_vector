@@ -5,6 +5,7 @@
 #include <sstream>
 #include <limits>
 #include <cstdlib>
+#include <fstream>
 
 using std::cout;
 using std::cin;
@@ -14,6 +15,8 @@ using std::stringstream;
 using std::string;
 using std::numeric_limits;
 using std::streamsize;
+using std::ofstream;
+using std::ifstream;
 
 template <typename T>
 void check_vector_size(const vector<T>&);
@@ -47,6 +50,12 @@ void delete_member(vector <T>&);
 
 template <typename T>
 void sort_members(vector <T>&);
+
+template<typename T>
+void write_to_file(const vector<T>&);
+
+template<typename T>
+void write_from_file(vector<T>&);
 
 template<typename T>
 bool validate_input(stringstream&&, T&);
@@ -280,6 +289,73 @@ else{
 
 
 
+template<typename T>
+void write_to_file(const vector<T> &vec){
+
+    string file_name;
+    cout<<"Type the file name that you want to write to: ";
+    cin>>file_name;
+    cin.ignore(numeric_limits<streamsize>::max(),'\n');
+    ofstream out_file{file_name};
+    int i {0};
+
+    if(out_file.is_open()){
+
+       for(const T &member:vec){
+          out_file <<member;}}
+
+    else{
+        cout<<"There was an error opening a file"<<endl;}
+
+    out_file.close();
+
+
+    }
+
+
+template<typename T>
+void write_from_file(vector<T> &vec){
+
+string file_name;
+T new_member;
+string file_input;
+int member_counter {0};
+
+cout<<"Enter the name of the file you want to write members from:";
+cin>>file_name;
+cin.ignore(numeric_limits<streamsize>::max(),'\n');
+ifstream in_file{file_name};
+if(in_file.is_open()){
+
+
+
+
+
+while(!in_file.eof()){
+
+    in_file >> file_input;
+    if(validate_input(stringstream{file_input},new_member)){
+        vec.push_back(new_member);
+    }
+
+    else{cout<<"There was an error with the member in a provided file at the index of: "<<member_counter<<endl;}
+    member_counter++;
+
+}
+
+in_file.close();
+
+}
+
+else{
+    cout<<"There was an error opening this file,please make sure the file you are providing exists"<<endl;
+}
+
+
+}
+
+
+
 
 
 
@@ -304,6 +380,8 @@ void menu(vector<T> &vec){
     cout<<"D - delete a member"<<endl;
     cout<<"X - sort members"<<endl;
     cout<<"R - Check how many times member appears"<<endl;
+    cout<<"W - Write members to a file"<<endl;
+    cout<<"I - Write members from a file"<<endl;
     cout<<"C- clear screen"<<endl;
     cout <<"Q - quit:" << endl<<endl;
     cout<<"Enter your choice:";
@@ -361,13 +439,23 @@ void menu(vector<T> &vec){
       check_vector_size(vec);
       break;
 
+   case 'W':
+      write_to_file(vec);
+      break;
+
+   case 'I':
+       write_from_file(vec);
+       break;
+
    case 'C':
        clear_screen();
        break;
 
+
    case'Q':
        cout<<"Goodbye";
        break;
+
 
    default:
      cout<<"Invalid choice\n";}
