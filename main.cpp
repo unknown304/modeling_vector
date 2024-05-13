@@ -297,7 +297,6 @@ void write_to_file(const vector<T> &vec){
     cin>>file_name;
     cin.ignore(numeric_limits<streamsize>::max(),'\n');
     ofstream out_file{file_name};
-    int i {0};
 
     if(out_file.is_open()){
 
