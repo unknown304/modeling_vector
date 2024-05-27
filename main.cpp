@@ -72,11 +72,8 @@ system("cls");}
 template<typename T>
 bool validate_input(stringstream &&stream,T &input){
 
-if(stream>>input)
-    return true;
 
-else
-    return false;
+return static_cast<bool>(stream >> input);
 
 }
 
